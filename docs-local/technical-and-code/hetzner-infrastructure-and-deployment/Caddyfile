@@ -1,0 +1,7 @@
+{$APP_DOMAIN} {
+    reverse_proxy anvil-app:3030
+}
+
+{$WA_DOMAIN} {
+    reverse_proxy evolution-api:8080
+}

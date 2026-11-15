@@ -1,0 +1,115 @@
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: fda_caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - fda_net
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: fda_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fda_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: fda_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fda_net
+
+  evolution-api:
+    image: atendai/evolution-api:latest
+    container_name: fda_evolution
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SERVER_URL: https://${WA_DOMAIN}
+      AUTHENTICATION_API_KEY: ${EVOLUTION_API_KEY}
+      DATABASE_ENABLED: "true"
+      DATABASE_PROVIDER: postgresql
+      DATABASE_CONNECTION_URI: postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}?schema=evolution
+      CACHE_REDIS_ENABLED: "true"
+      CACHE_REDIS_URI: redis://:${REDIS_PASSWORD}@redis:6379/1
+      WEBHOOK_GLOBAL_ENABLED: "true"
+      WEBHOOK_GLOBAL_URL: http://anvil-app:3030/_/api/webhooks/whatsapp
+      WEBHOOK_GLOBAL_WEBHOOK_BY_EVENTS: "false"
+      DEL_INSTANCE: "false"
+    volumes:
+      - evolution_instances:/evolution/instances
+    networks:
+      - fda_net
+
+  anvil-app:
+    image: python:3.11-slim
+    container_name: fda_anvil
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      evolution-api:
+        condition: service_started
+    working_dir: /app
+    command: >
+      bash -c "apt-get update && apt-get install -y --no-install-recommends openjdk-17-jre-headless &&
+      pip install --no-cache-dir anvil-app-server android-sms-gateway boto3 httpx redis &&
+      anvil-app-server --app /app/anvil_app --data-dir /app/anvil_data --origin https://${APP_DOMAIN} --port 3030 --database postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}"
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN}
+      EVOLUTION_URL: http://evolution-api:8080
+      EVOLUTION_API_KEY: ${EVOLUTION_API_KEY}
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
+      R2_ACCOUNT_ID: ${R2_ACCOUNT_ID}
+      R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID}
+      R2_SECRET_ACCESS_KEY: ${R2_SECRET_ACCESS_KEY}
+      ANVIL_ENCRYPTION_KEY: ${ANVIL_ENCRYPTION_KEY}
+    volumes:
+      - ./anvil_app:/app/anvil_app
+      - ./anvil_data:/app/anvil_data
+    networks:
+      - fda_net
+
+volumes:
+  caddy_data:
+  caddy_config:
+  postgres_data:
+  redis_data:
+  evolution_instances:
+
+networks:
+  fda_net:
+    driver: bridge
