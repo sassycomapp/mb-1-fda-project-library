@@ -1,3 +1,8 @@
+---
+title: "Mybizz-Operations-and-Governance-Specs"
+doc-id: "mb-3d255dca"
+updated: "2026-11-15"
+---
 # Mybizz Operations, Fair-Use & Governance Specifications
 
 **Scope:** Mybizz-Live Ltd · Front Desk Assistant (MVP) & Mybizz CS (`mb-3-cs`)  

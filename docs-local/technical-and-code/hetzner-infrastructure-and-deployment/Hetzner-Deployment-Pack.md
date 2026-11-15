@@ -1,3 +1,8 @@
+---
+title: "Hetzner-Deployment-Pack"
+doc-id: "mb-cef827b0"
+updated: "2026-11-15"
+---
 # Hetzner Cloud Deployment Pack — Front Desk Assistant
 
 This guide provides the complete setup for self-hosting your **Anvil App Server** (Material 3 Front Desk Assistant), **Evolution API** (multi-tenant WhatsApp), **PostgreSQL 16**, **Redis 7**, **Caddy** (automated SSL/HTTPS), and **Cloudflare R2** storage on a **Hetzner Cloud VPS**.

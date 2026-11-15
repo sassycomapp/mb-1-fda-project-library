@@ -1,3 +1,8 @@
+---
+title: "Mybizz-Business-Plan-copied-from-mb-3-c"
+doc-id: "mb-5f5a6829"
+updated: "2026-11-15"
+---
 # Mybizz-Live Ltd
 **Business Plan · Updated November 2026 · Interim Trading from January 2027 · Full Platform Go-Live 1 April 2027**
 

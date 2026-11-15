@@ -1,3 +1,8 @@
+---
+title: "Material-3-Anvil-UI-Wiring-Guide"
+doc-id: "mb-dc2bbe90"
+updated: "2026-11-15"
+---
 # Front Desk Assistant — Material 3 Anvil Client Forms & UI Wiring Guide
 
 **Target Theme:** `m3-custom-theme` (`v2.0.0` / dependency ID `UGGJBAZUZ74XZ7VU`)  

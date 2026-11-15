@@ -1,3 +1,8 @@
+---
+title: "Front-Desk-Assistant"
+doc-id: "mb-0a2208a3"
+updated: "2026-11-15"
+---
 # Front Desk Assistant
 
 **Lightweight AI front desk for consultants and service businesses**: 

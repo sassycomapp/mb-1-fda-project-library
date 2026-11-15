@@ -1,3 +1,8 @@
+---
+title: "Mybizz-Marketing-Plan"
+doc-id: "mb-56648746"
+updated: "2026-11-15"
+---
 # Mybizz-Live Ltd — Bootstrap Marketing & Capital Plan
 
 **Product Ecosystem:** Front Desk Assistant (MVP) → Mybizz CS (`mybizz.live`)  

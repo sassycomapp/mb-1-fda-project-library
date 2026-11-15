@@ -1,3 +1,8 @@
+---
+title: "Front-Desk-Data-Schema"
+doc-id: "mb-b0bb9dbe"
+updated: "2026-11-15"
+---
 # Front Desk Assistant — Anvil Data Tables Schema & Pipeline Spec
 
 This specification defines the exact Anvil Data Tables structure and server pipeline (`front_desk_pipeline.py`) for **Front Desk Assistant** (running on Anvil App Server + PostgreSQL on Hetzner Cloud).

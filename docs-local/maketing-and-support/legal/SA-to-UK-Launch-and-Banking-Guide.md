@@ -1,3 +1,8 @@
+---
+title: "SA-to-UK-Launch-and-Banking-Guide"
+doc-id: "mb-51d618ca"
+updated: "2026-11-15"
+---
 # South Africa → UK Cross-Border Launch & Banking Guide (Sole Proprietor)
 
 **Purpose:** A practical reference explaining how to legally sell **Front Desk Assistant** globally from South Africa as a sole proprietor, pass **Paddle** verification, handle **Wise** banking, and stay compliant with **SARS** and **SARB** before incorporating **Mybizz-Live Ltd** in the UK.

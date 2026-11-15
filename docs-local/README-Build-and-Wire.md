@@ -1,3 +1,8 @@
+---
+title: "README-Build-and-Wire"
+doc-id: "mb-6f3008c8"
+updated: "2026-11-15"
+---
 # Front Desk Assistant — Build & Wire Assembly Guide
 
 This checklist walks you through assembling all **13 Python modules** and **Hetzner Cloud infrastructure files** into a working, production-ready Anvil application built on **`m3-custom-theme` (`v2.0.0`)**.

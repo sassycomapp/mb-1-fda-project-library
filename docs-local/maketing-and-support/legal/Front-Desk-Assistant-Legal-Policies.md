@@ -1,3 +1,8 @@
+---
+title: "Front-Desk-Assistant-Legal-Policies"
+doc-id: "mb-cdc43819"
+updated: "2026-11-15"
+---
 # Front Desk Assistant — Website Legal Policies (Paddle Verification Pack)
 
 *Note: Place these three pages on your Front Desk Assistant website (e.g., `/terms`, `/privacy`, `/refunds`) and link them clearly in your site footer before submitting your domain to Paddle for seller verification. Replace `[Your Full Legal Name]` and `[Your Physical Address in South Africa]` with your actual details.*

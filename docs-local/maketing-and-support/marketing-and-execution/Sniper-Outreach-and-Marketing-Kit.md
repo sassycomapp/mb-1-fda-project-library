@@ -1,3 +1,8 @@
+---
+title: "Sniper-Outreach-and-Marketing-Kit"
+doc-id: "mb-43df2b4b"
+updated: "2026-11-15"
+---
 # Sniper Outreach & Marketing Kit — Front Desk Assistant
 
 **Launch Window:** January 2027 (Pre-Incorporation Bootstrap Phase)  

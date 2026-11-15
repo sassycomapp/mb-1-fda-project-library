@@ -1,3 +1,8 @@
+---
+title: "Mybizz-Content-and-Social-Pack"
+doc-id: "mb-a8ba9c61"
+updated: "2026-11-15"
+---
 # Mybizz — Content & Social Copy Pack (Zero-Budget Launch)
 
 **Purpose:** Ready-to-publish founder profile copy, Build-in-Public posts, and "RIP to the 12-Tool Stack" guerrilla content to support your January 2027 Front Desk Assistant launch and April 2027 Mybizz CS launch.
