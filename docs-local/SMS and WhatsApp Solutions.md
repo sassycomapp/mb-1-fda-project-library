@@ -1,3 +1,8 @@
+---
+title: "SMS and WhatsApp Solutions"
+doc-id: "mb-cbd028d5"
+updated: "2026-11-15"
+---
 # SMS and WhatsApp Solutions
 
 for Front Desk Assistant
