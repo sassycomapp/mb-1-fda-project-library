@@ -1,6 +1,7 @@
 ---
 title: "mb-1-fda-architecture-reference"
 updated: "2026-11-16"
+doc-id: "mb-ff6bca53"
 ---
 # Mybizz FDA — Architecture Reference
 
@@ -15,17 +16,17 @@ Every feature carries the number and name it has in `mb-1-fda-concept.md` sectio
 | Data tables and fields | `authoritative-schema.md` |
 | Brand and visual identity | `brand-profile.md`; palette colour values in `m3-custom-theme` |
 | Legal texts shown to clients and customers | `legal-policies.md` |
-| Roles and access | [[spec-security-architecture]] |
-| The Vault | [[spec-vault-system]] |
-| Names | [[spec-nomenclature]] |
-| Anvil platform rules | [[spec-anvil-platform-standards]] |
-| UI rules | [[spec-ui-standards]] |
+| Roles and access | [[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md) |
+| The Vault | [[[default:specifications-global/spec-vault-system]]](C:/dev/project-library-global/specifications-global/spec-vault-system.md) |
+| Names | [[[default:specifications-global/spec-nomenclature]]](C:/dev/project-library-global/specifications-global/spec-nomenclature.md) |
+| Anvil platform rules | [[[default:specifications-global/spec-anvil-platform-standards]]](C:/dev/project-library-global/specifications-global/spec-anvil-platform-standards.md) |
+| UI rules | [[[default:specifications-global/spec-ui-standards]]](C:/dev/project-library-global/specifications-global/spec-ui-standards.md) |
 
 ---
 
 ## 1. The Five-App System
 
-The five-app model is Mybizz-wide ([[spec-five-app-architecture-model]]). This section is the Mybizz FDA instance of that model.
+The five-app model is Mybizz-wide ([[[default:specifications-global/spec-five-app-architecture-model]]](C:/dev/project-library-global/specifications-global/spec-five-app-architecture-model.md)). This section is the Mybizz FDA instance of that model.
 
 | App | Role | Repository | Hosted on | Web address |
 |---|---|---|---|---|
@@ -60,7 +61,7 @@ The five-app model is Mybizz-wide ([[spec-five-app-architecture-model]]). This s
 
 ### App 5 — Mybizz management app
 - One management app serves every Mybizz business. For Mybizz FDA it registers clients, provisions, releases to, suspends and removes client instances, receives Paddle notifications and shows each client's health (F-21).
-- Communicates with client instances through HTTP endpoints secured with a per-client Bearer token ([[spec-api-specification]]).
+- Communicates with client instances through HTTP endpoints secured with a per-client Bearer token ([[[default:specifications-global/spec-api-specification]]](C:/dev/project-library-global/specifications-global/spec-api-specification.md)).
 - Reaches the Hetzner servers only through the provisioning runner (section 5).
 - Holds client-level records only: the client's business name, contact name, email address, phone number and billing address, the Paddle customer and subscription references, the subscription status, the instance address, usage and health figures, and a minimal billing log. Payment data stays with Paddle.
 
@@ -72,7 +73,7 @@ Every client instance runs App 3 on `master_template`. A form or server module a
 
 - App 3 holds only its startup module, table definitions, scheduled tasks and Users settings.
 - A change needed for one client is made in App 1, tested on the test client instance, and released into `master_template`; every client instance then receives it.
-- App 3's repository and `mb-1-fda-app4` carry a README stating this rule ([[adr-client-instance-readme-five-app-system]]).
+- App 3's repository and `mb-1-fda-app4` carry a README stating this rule ([[[default:adr-global/adr-client-instance-readme-five-app-system]]](C:/dev/project-library-global/adr-global/adr-client-instance-readme-five-app-system.md)).
 
 ---
 
@@ -190,7 +191,7 @@ server_code/
 
 ## 8. Module Architecture
 
-The three-tier module pattern (forms, client modules, server modules, pure logic modules) is defined in [[spec-anvil-platform-standards]] section 3. Every server function a form calls checks the signed-in user's role before doing anything.
+The three-tier module pattern (forms, client modules, server modules, pure logic modules) is defined in [[[default:specifications-global/spec-anvil-platform-standards]]](C:/dev/project-library-global/specifications-global/spec-anvil-platform-standards.md) section 3. Every server function a form calls checks the signed-in user's role before doing anything.
 
 ---
 
@@ -205,7 +206,7 @@ The three-tier module pattern (forms, client modules, server modules, pure logic
 ## 10. Startup and Authentication Routing
 
 - The startup module applies the saved palette and mode, then routes: no signed-in user → sign-in; signed-in user with setup incomplete → setup wizard (Owner only; other roles see a "setup in progress" page); otherwise → action queue.
-- Anvil Users service: email and password, two-factor authentication required for every team member, the Owner on FIDO2 ([[spec-security-architecture]]).
+- Anvil Users service: email and password, two-factor authentication required for every team member, the Owner on FIDO2 ([[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md)).
 - New sign-ups are off; users are created by App 5 (the Owner) or by the Owner (other team members).
 
 ---
@@ -222,7 +223,7 @@ The three-tier module pattern (forms, client modules, server modules, pure logic
 ## 12. Feature Architecture
 
 ### F-01 Accounts, roles and sign-in
-- `users` table with role per [[spec-security-architecture]]; per-instance role limits from that specification.
+- `users` table with role per [[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md); per-instance role limits from that specification.
 - Two-factor reset by email only; Mybizz does not reset second factors.
 - Every action that changes data writes an `activity_log` row with the user, or `ai` or `system` (Hard Rule 6).
 
@@ -311,7 +312,7 @@ The three-tier module pattern (forms, client modules, server modules, pure logic
 - Export: every table to CSV in one archive, written to R2 and offered for download.
 
 ### F-18 Help, tooltips and in-app guidance
-- Per [[spec-ui-standards]]: tooltip toggle, tooltip on every actionable component, page help-video menu, dashboard quick-link, Return button on the dashboard.
+- Per [[[default:specifications-global/spec-ui-standards]]](C:/dev/project-library-global/specifications-global/spec-ui-standards.md): tooltip toggle, tooltip on every actionable component, page help-video menu, dashboard quick-link, Return button on the dashboard.
 
 ### F-19 Language
 - AI replies in the language of the customer's message.

@@ -1,6 +1,7 @@
 ---
 title: "authoritative-schema"
 updated: "2026-11-16"
+doc-id: "mb-025ce9f9"
 ---
 # Mybizz FDA — Authoritative Database Schema
 
@@ -19,8 +20,8 @@ Every table and column of a Mybizz FDA client instance: name, type and allowed v
 - **Nothing overwritten.** Rows of `messages` are never edited after they are received, sent or approved, and never deleted while the contact exists; only their status columns change (Hard Rule 5).
 - **A name on every action.** Every row that records an action carries the user who took it, or the actor `ai` or `system` (Hard Rule 6).
 - **History outside the tables.** `activity_log` and `webhook_log` rows older than 30 days, backups and exports are kept in the client's R2 bucket (F-17).
-- **Credentials only in the Vault**, encrypted ([[spec-vault-system]]).
-- **Names** follow [[spec-nomenclature]]. A link column is named after its target table in the singular, or `{target}_id`.
+- **Credentials only in the Vault**, encrypted ([[[default:specifications-global/spec-vault-system]]](C:/dev/project-library-global/specifications-global/spec-vault-system.md)).
+- **Names** follow [[[default:specifications-global/spec-nomenclature]]](C:/dev/project-library-global/specifications-global/spec-nomenclature.md). A link column is named after its target table in the singular, or `{target}_id`.
 - **Allowed values** are lowercase strings, written here as `value1` / `value2`. Code compares against these exact strings.
 - **Standard columns.** Every table has `created_at`. Every table whose rows are edited after creation has `updated_at`. Every core table has `metadata` (`simpleObject`).
 
@@ -105,7 +106,7 @@ Anvil Users service columns (password hash, MFA, remembered logins) are kept as 
 | `created_at`, `updated_at` | datetime | |
 
 ### `vault`
-As [[spec-vault-system]] defines it. Holds: the Bearer token for App 5, the R2 bucket token, the OpenRouter key, the Groq key, the SMSGate username, password, encryption passphrase and webhook signing key, the Meta business token and verify token, and each team member's Google refresh token.
+As [[[default:specifications-global/spec-vault-system]]](C:/dev/project-library-global/specifications-global/spec-vault-system.md) defines it. Holds: the Bearer token for App 5, the R2 bucket token, the OpenRouter key, the Groq key, the SMSGate username, password, encryption passphrase and webhook signing key, the Meta business token and verify token, and each team member's Google refresh token.
 
 ### `channel_status` (F-04, F-08, F-09)
 | Column | Type | Values / notes |

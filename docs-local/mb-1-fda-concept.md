@@ -1,6 +1,7 @@
 ---
 title: "mb-1-fda-concept"
 updated: "2026-11-16"
+doc-id: "mb-cb01f21c"
 ---
 # Mybizz FDA — Concept
 
@@ -53,14 +54,14 @@ Mybizz FDA is the proof of concept and minimum viable product of Mybizz CS. Mybi
 
 ## 4. Names Used in This Document
 
-The Mybizz nomenclature applies ([[spec-nomenclature]]).
+The Mybizz nomenclature applies ([[[default:specifications-global/spec-nomenclature]]](C:/dev/project-library-global/specifications-global/spec-nomenclature.md)).
 
 - **Mybizz:** the brand, used in every product, document and message.
 - **The operator:** the legal party behind Mybizz FDA, named wherever a legal party is named (agreements, Paddle, policies and invoices). The operator is David trading as Mybizz, a sole proprietor, until Mybizz-Live Ltd is registered; Mybizz-Live Ltd is the operator from then on.
 - **The developer:** David, who builds Mybizz FDA through PDLF.
 - **Client:** the business or individual that subscribes to Mybizz FDA and is given its own client instance.
 - **Owner:** the person responsible for a client instance: the client who signed up, once onboarded.
-- **Roles:** Owner, Manager, Admin, Staff and Customer, the same as in every Mybizz application ([[spec-security-architecture]]). In Mybizz FDA, customers never sign in, so the Customer role holds no users.
+- **Roles:** Owner, Manager, Admin, Staff and Customer, the same as in every Mybizz application ([[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md)). In Mybizz FDA, customers never sign in, so the Customer role holds no users.
 - **Team member:** a user with the role Owner, Manager, Admin or Staff.
 - **Customer:** a client's own customer, including a person who contacts the client for the first time.
 - **Visitor:** someone viewing a client's public website without logging in.
@@ -94,8 +95,8 @@ Each feature is numbered. The same number and name are used in every later Mybiz
 
 ### F-01 Accounts, roles and sign-in
 - Anvil Users service; two-factor authentication required for every team member.
-- Every team member is included in the price. The number of users in each role follows the per-instance limits of [[spec-security-architecture]].
-- Roles follow [[spec-security-architecture]]. The Owner controls settings, channels, AI, storage and billing; the other roles work the inbox, the action queue and bookings within the rights their role gives.
+- Every team member is included in the price. The number of users in each role follows the per-instance limits of [[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md).
+- Roles follow [[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md). The Owner controls settings, channels, AI, storage and billing; the other roles work the inbox, the action queue and bookings within the rights their role gives.
 - A lost second factor is reset by the user by email; Mybizz does not reset it.
 
 ### F-02 Setup wizard
