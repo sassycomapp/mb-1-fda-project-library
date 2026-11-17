@@ -1,6 +1,6 @@
 ---
 title: "mb-1-fda-concept"
-updated: "2026-11-16"
+updated: "2026-11-17"
 doc-id: "mb-cb01f21c"
 ---
 # Mybizz FDA — Concept
@@ -227,7 +227,6 @@ Each feature is numbered. The same number and name are used in every later Mybiz
 - **No other plans:** no annual plan, no setup fee, no founding offer and no add-ons sold by Mybizz.
 - **Costs outside the price, paid by the client directly:** AI use on the client's own OpenRouter key; WhatsApp messages charged by Meta; SMS charged by the client's phone plan; R2 storage above Cloudflare's free tier.
 - **Trial:** a prospective client tests Mybizz FDA on Mybizz's own front desk (F-22).
-- **Sales approach:** direct, personal, one-to-one outreach by the developer, building in public; no paid advertising while Mybizz FDA funds Mybizz-Live Ltd.
 - **Separate from Mybizz CS:** a Mybizz FDA client who wants Mybizz CS signs up to Mybizz CS separately; Mybizz may credit the unused part of the client's paid Mybizz FDA month to the new Mybizz CS account.
 
 ---
@@ -348,7 +347,6 @@ Each feature is numbered. The same number and name are used in every later Mybiz
 - No message is ever sent to a customer who opted out.
 - No silent failure: every failure appears in the action queue.
 - Clients see, on the dashboard, enquiries answered, meetings booked, activity by channel and activity by team member each month.
-- Mybizz FDA's income funds Mybizz-Live Ltd and Mybizz CS.
 
 ---
 
