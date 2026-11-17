@@ -95,7 +95,7 @@ Each feature is numbered. The same number and name are used in every later Mybiz
 
 ### F-01 Accounts, roles and sign-in
 - Anvil Users service; two-factor authentication required for every team member.
-- Every team member is included in the price. The number of users in each role follows the per-instance limits of [[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md).
+- Every team member is included in the price: one Owner and any number of team members in the other roles, per [[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md).
 - Roles follow [[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md). The Owner controls settings, channels, AI, storage and billing; the other roles work the inbox, the action queue and bookings within the rights their role gives.
 - A lost second factor is reset by the user by email; Mybizz does not reset it.
 
@@ -264,7 +264,7 @@ Each feature is numbered. The same number and name are used in every later Mybiz
 | App 1 | `mb-1-fda-app1` | Development workspace; built by PDLF | Mybizz's Anvil account (Anvil.works) |
 | App 2 | `master_template` | Release of App 1; the dependency that holds all logic and forms | Mybizz's Anvil account |
 | App 3 | `blank_client_template` | Client instance template: startup module, table definitions, scheduled tasks, Users settings; no forms or server modules | Mybizz's Anvil account |
-| App 4 | `[client-name]-fda` | One client instance per client, built from App 3 and depending on App 2; its release image is defined in `mb-1-fda-app4` | Anvil App Server (the open-source Anvil runtime) on Hetzner Cloud: one container and one database per client |
+| App 4 | `[client-name]-fda` | One client instance per client, built from App 3 and depending on App 2; its release image is defined in `mb-1-fda-app4` | Anvil App Server (the open-source Anvil runtime) on Mybizz's Hetzner Cloud servers, with the databases in Mybizz's Ubicloud service: one container and one database per client |
 | App 5 | Mybizz management app | One management app for every Mybizz business | Mybizz's Anvil account |
 
 ### 10.2 One client, one instance, one database
@@ -272,9 +272,9 @@ Each feature is numbered. The same number and name are used in every later Mybiz
 - Every channel delivers straight to the client's own instance: email by its unique inbound address, WhatsApp by its per-number callback address, SMS by its registered webhook, web form and webchat by the client's own code line.
 
 ### 10.3 Hetzner hosting
-- Client instances run on Hetzner Cloud servers in the EU, each client in its own container running the Anvil App Server at the one version Mybizz pins, with its own PostgreSQL database.
+- Client instances run on Hetzner Cloud servers in the EU, each client in its own container running the Anvil App Server at the one version Mybizz pins, with its own PostgreSQL database in Mybizz's Ubicloud managed database service, which has a standby from the first client.
 - Every container runs the same release image, holding App 3, App 2 and the `m3` theme.
-- Mybizz runs these servers itself, so the design covers operating-system security updates, container restarts, monitoring and alerts, nightly database backups held off the server, and restore.
+- Mybizz runs the application servers itself, so the design covers operating-system security updates, container restarts, monitoring and alerts, and server rebuilds from the release image. Ubicloud runs the database's updates, failover and continuous backups, and every client's nightly backup is also held in its own R2 bucket.
 - Each instance answers over HTTPS at its own address, `[client-name].fda.mybizz.live`. Mybizz FDA has no public website of its own for a client, so a client needs no domain for its instance.
 
 ### 10.4 No messaging servers
@@ -293,7 +293,8 @@ Each feature is numbered. The same number and name are used in every later Mybiz
 | Service | Used for | Paid by |
 |---|---|---|
 | Anvil | Apps 1, 2, 3 and 5; App Server runtime for App 4 | Mybizz |
-| Hetzner Cloud | App 4 servers and databases | Mybizz |
+| Hetzner Cloud | App 4 application servers | Mybizz |
+| Ubicloud | App 4 databases (managed PostgreSQL) | Mybizz |
 | Cloudflare R2 | The client's backups and history, in the client's own account | Client (free tier covers typical use) |
 | Amazon SES | Email channel, inbound and outbound | Mybizz |
 | Meta WhatsApp Cloud API | WhatsApp channel | Client, directly to Meta |
@@ -359,6 +360,6 @@ Each feature is numbered. The same number and name are used in every later Mybiz
 | AI costs run away | The client's own key with a monthly ceiling and draft-only fallback |
 | The client's phone is off, so SMS stops | Health check every 15 minutes; a high-priority item in the action queue |
 | Customer data leaks between clients | One instance and one database per client; cross-client access is impossible by design |
-| A Hetzner server fails | Nightly database backups held off the server, monitoring alerts to the developer and a tested restore procedure |
+| A Hetzner server fails | The server is rebuilt from the release image with no data lost, because the databases are in Ubicloud; a database failure is taken over by its standby; nightly backups in each client's R2 bucket |
 | Spam floods the web form or webchat | Spam protection on both, rules first, then AI classification |
 | Mail provider rules block access | The email channel uses forwarding and Amazon SES, not mailbox-reading permissions |

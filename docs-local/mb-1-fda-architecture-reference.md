@@ -1,6 +1,6 @@
 ---
 title: "mb-1-fda-architecture-reference"
-updated: "2026-11-16"
+updated: "2026-11-17"
 doc-id: "mb-ff6bca53"
 ---
 # Mybizz FDA — Architecture Reference
@@ -53,7 +53,7 @@ The five-app model is Mybizz-wide ([[[default:specifications-global/spec-five-ap
 - Each client's App Server builds the client's tables from App 3's table definitions and adds each release's new tables and columns.
 
 ### App 4 — client instances
-- Each client instance runs on the Anvil App Server, unmodified, at the one version Mybizz pins, as one container named `[client-name]-fda` on a Mybizz Hetzner Cloud server, with its own database on the Mybizz FDA database server (section 4).
+- Each client instance runs on the Anvil App Server, unmodified, at the one version Mybizz pins, as one container named `[client-name]-fda` on a Mybizz Hetzner Cloud server, with its own database in Mybizz's Ubicloud managed PostgreSQL service (section 4).
 - Runs the release image: App 3, `master_template` and the `m3` theme. Nothing else.
 - Updated through the release image: App 5's Release action moves every client instance to each new release.
 - The test client instance is a client instance of its own, holding test data only.
@@ -92,11 +92,10 @@ Every client instance runs App 3 on `master_template`. A form or server module a
 ### 4.1 Servers
 | Server | Role | Notes |
 |---|---|---|
-| Application server(s) | Runs the client containers and Caddy | Ubuntu LTS; Docker; Hetzner firewall allows ports 22 (SSH, key only, from the developer's addresses), 80 and 443 |
-| Database primary | PostgreSQL, one database and one database user per client | Private Hetzner network only; no public port |
-| Database standby | Streaming replica of the primary | Private network only; promoted if the primary fails |
+| Application server(s) | `CPX42`; runs the client containers, Caddy and the provisioning runner | Ubuntu LTS; Docker; Hetzner firewall allows ports 22 (SSH, key only, from the developer's addresses), 80 and 443 |
+| Database service | Mybizz's Ubicloud managed PostgreSQL, shared by every Mybizz business: one database and one database user per client, with a standby promoted automatically if the primary fails | Accepts connections only from Mybizz's Hetzner servers, over TLS with full verification |
 
-- Region: Hetzner's EU locations (Germany or Finland). The standby sits in a different EU location from the primary.
+- Region: Hetzner Nuremberg for the application servers; Ubicloud Germany for the database service. Hosting follows `spec-client-instance-hosting` in `project-library-global`.
 - Hetzner automated server backups are switched on for every server.
 - Operating-system security updates install automatically (`unattended-upgrades`); a reboot that an update needs happens in the Sunday 06:00 UK maintenance window.
 
@@ -121,13 +120,13 @@ The database limits are held by PostgreSQL on each client's database user; App 5
 
 ### 4.4 Monitoring
 - Every client instance reports its memory, database size, message volumes, channel health and last team-member sign-in to App 5 on a schedule.
-- An external uptime check calls App 5's status endpoint every minute and alerts the developer if App 5 fails or a client instance has not reported for 30 minutes.
+- UptimeRobot calls App 5's status endpoint every 5 minutes and alerts the developer if App 5 fails or a client instance has not reported for 30 minutes.
 - Disk use above 75% on any server alerts the developer.
 
 ### 4.5 Backups and restore
 - Nightly at 02:00 UTC each client instance writes an encrypted backup of its data to the client's own R2 bucket (F-17).
 - R2 Object Lock keeps daily backups for 7 days and weekly backups for 28 days, so no key can delete them early.
-- Hetzner server backups cover the servers themselves.
+- Ubicloud backs up the database service continuously, kept 7 days with restore to any minute; Hetzner server backups cover the application servers.
 - Each month the test client instance restores one client backup into a scratch database, checks the row counts against the source and drops the scratch database.
 
 ---
@@ -223,7 +222,7 @@ The three-tier module pattern (forms, client modules, server modules, pure logic
 ## 12. Feature Architecture
 
 ### F-01 Accounts, roles and sign-in
-- `users` table with role per [[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md); per-instance role limits from that specification.
+- `users` table with role per [[[default:specifications-global/spec-security-architecture]]](C:/dev/project-library-global/specifications-global/spec-security-architecture.md); one Owner and any number of team members in the other roles, per that specification.
 - Two-factor reset by email only; Mybizz does not reset second factors.
 - Every action that changes data writes an `activity_log` row with the user, or `ai` or `system` (Hard Rule 6).
 

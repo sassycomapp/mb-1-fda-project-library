@@ -1,6 +1,7 @@
 ---
 title: "mb-1-fda-architecture-explainer"
-updated: "2026-11-16"
+updated: "2026-11-17"
+doc-id: "mb-ebfd9d25"
 ---
 # Mybizz FDA — Architecture Explainer
 
@@ -37,7 +38,7 @@ Each copy has its own web address, such as `smithconsulting.fda.mybizz.live`. Th
 The client copies run on rented Hetzner servers in the EU.
 
 - One **application server** runs every client copy, each in its own sealed box (a container).
-- One **database server** holds one database per client. A second database server keeps a live copy and takes over if the first fails.
+- One managed **database service**, run by Ubicloud, holds one database per client. A second database keeps a live copy and takes over by itself if the first fails, and Ubicloud keeps continuous backups.
 - **Caddy**, a small program on the application server, gives every client copy its secure web address (HTTPS) automatically.
 
 **Why Hetzner:** Hetzner costs a fraction of managed hosting, which keeps Mybizz FDA affordable at £45 a month.
@@ -105,7 +106,7 @@ Each team member connects their own Google Calendar. A customer who already has 
 
 ## 9. What Has to Happen Before Launch
 
-- The Hetzner servers, Caddy, the database pair and the provisioning runner are set up and tested.
+- The Hetzner servers, Caddy, the provisioning runner and the Ubicloud database service are set up and tested.
 - Amazon SES is set up for `in.fda.mybizz.live` and `reply.fda.mybizz.live`.
 - Google approves Mybizz FDA's calendar access (a sensitive-scope verification, without a security audit).
 - Paddle accepts the operator and the £45 price.
